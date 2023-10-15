@@ -9,8 +9,9 @@ You can use this single file (along with a config file) to easily use Vultr API 
 3. Create a DNS domain in `Products` > `Network` > `DNS`
 4. Create A records (i.e. `local.mydomain.com`, `dev.mydomain.com`, `mymediaserver.mydomain.com`, etc)
 5. Clone this repo in your homelab
-6. Update the vultr.config.json file with your settings. `dynamic_records` section should consist of only A record names. I.e. `["local", "dev", "myymediaserver"]`
-7. Create a cron job with a reasonable interval as follows: `cd /path/to/repo/directory/ && php VultrDNS.php` (I used every 30 minutes throughout everyday so it will check for changes and update the record accordingly)
+6. Clone the vultrdns.config.json.sample file and rename it into vultrdns.config.json file
+7. Update the config with your settings. `dynamic_records` section should consist of only A record names. I.e. `["local", "dev", "myymediaserver"]`
+8. Create a cron job with a reasonable interval as follows: `cd /path/to/repo/directory/ && php VultrDNS.php` (I used every 30 minutes throughout everyday so it will check for changes and update the record accordingly)
 
 By the way, big shout outs to @andyjsmith for inspiring me into making this project with his awesome https://github.com/andyjsmith/Vultr-Dynamic-DNS repo!
 
