@@ -45,7 +45,7 @@ class VultrDNS
             $this->updateDnsRecord($this->vultrDomain, $record['id'], $record['name'], $ip);
             $this->output[] = 'Updated ' . $record['name'];
         }
-        return implode(', ', $this->output);
+        return implode(', ', $this->output)."\r\n";
     }
 
     protected function updateDnsRecord(string $domain, string $record_id, string $name, string $data)
