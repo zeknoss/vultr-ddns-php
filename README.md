@@ -1,4 +1,4 @@
-# VULTR DNS with PHP
+# VULTR DDNS with PHP
 Utilize Vultr DNS and Vultr API to create yourself a free DDNS!
 
 You can use this single file (along with a config file) to easily use Vultr API and create yourself a DDNS solution for your homelab.
