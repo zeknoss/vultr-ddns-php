@@ -1,0 +1,7 @@
+{
+    "api_key": "PUT YOUR VULTR API KEY HERE",
+    "domain": "PUT YOUR DNS DOMAIN NAME HERE",
+    "dynamic_records": [
+        "array of your subdomains (should be A records)"
+    ]
+}
