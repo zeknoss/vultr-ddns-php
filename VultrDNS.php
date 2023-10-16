@@ -30,28 +30,28 @@ class VultrDNS
         ]));
 
         $res = json_decode($this->listDomainDnsRecords($this->vultrDomain), true);
-        foreach ($res['records'] AS $record) {
+        foreach ($res['records'] as $record) {
             if (
                 !in_array($record['name'], $this->domains) ||
                 $record['type'] !== 'A'
             )
                 continue;
 
-            if($ip === $record['data']) {
+            if ($ip === $record['data']) {
                 $this->output[] = 'No change for ' . $record['name'];
                 continue;
             }
 
-            $this->updateDnsRecord($this->vultrDomain, $record['id'], $record['name'], $ip);
-            $this->output[] = 'Updated ' . $record['name'];
+            $res = $this->updateDnsRecord($this->vultrDomain, $record['id'], $record['name'], $ip);
+            $this->output[] = in_array($res['code'], [200, 201, 202, 204]) ? 'Updated ' . $record['name'] : 'Error updating ' . $record['name'] . '(' . $res['data'] . ')';
         }
-        return implode(', ', $this->output)."\r\n";
+        return implode(', ', $this->output) . "\r\n";
     }
 
     protected function updateDnsRecord(string $domain, string $record_id, string $name, string $data)
     {
         $post = array("name" => $name, "data" => $data);
-        return $this->callApi("v2/domains/$domain/record/$record_id", 'PATCH', true, $this->apiKeyHeader(), $post);
+        return $this->callApi("v2/domains/$domain/records/$record_id", 'PATCH', false, $this->apiKeyHeader(), $post);
     }
 
     protected function listDomainDnsRecords($domain)
@@ -93,10 +93,10 @@ class VultrDNS
             return $http_response_code;
         }
         if ($http_response_code === 200 || $http_response_code === 201 || $http_response_code === 202) {
-            return $this->call_data = $call_response;//Return data
+            return $this->call_data = $call_response; //Return data
         }
         var_dump($call_response);
-        return $this->call_data = array('http_response_code' => $http_response_code);//Call failed
+        return $this->call_data = array('code' => $http_response_code, 'data' => $call_response);
     }
 }
 
